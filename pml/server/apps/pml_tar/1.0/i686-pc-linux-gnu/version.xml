@@ -1,0 +1,34 @@
+<version>
+   <file>
+      <physical_name>wrapper_25825_i686-pc-linux-gnu</physical_name>
+      <main_program/>
+   </file>
+   <file>
+      <physical_name>pml_tar_1.0_i686-pc-linux-gnu.pl</physical_name>
+      <logical_name>pml_tar</logical_name>
+   </file>
+   <file>
+      <physical_name>weka_i686-pc-linux-gnu.jar</physical_name>
+      <logical_name>weka.jar</logical_name>
+      <copy_file/>
+   </file>
+   <file>
+      <physical_name>waffles_cluster_i686-pc-linux-gnu</physical_name>
+      <logical_name>waffles_cluster</logical_name>
+      <copy_file/>
+   </file>
+   <file>
+      <physical_name>waffles_dimred_i686-pc-linux-gnu</physical_name>
+      <logical_name>waffles_dimred</logical_name>
+      <copy_file/>
+   </file>
+   <file>
+      <physical_name>waffles_learn_i686-pc-linux-gnu</physical_name>
+      <logical_name>waffles_learn</logical_name>
+      <copy_file/>
+   </file>
+   <file>
+      <physical_name>pml_tar_job_1.0_i686-pc-linux-gnu.xml</physical_name>
+      <logical_name>job.xml</logical_name>
+   </file>
+</version>

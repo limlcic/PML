@@ -1,0 +1,3 @@
+waffles_learn train -seed 1 train.arff naivebayes > mod.json
+waffles_learn predict -seed 1 mod.json test.arff > out_tt.txt
+perl tt_out.pl > out.txt

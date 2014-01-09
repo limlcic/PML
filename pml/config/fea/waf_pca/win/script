@@ -1,0 +1,3 @@
+perl cut_label.pl
+waffles_dimred pca ./data_no_label.arff 40 -seed 1 > out_no_label.txt
+perl add_label.pl

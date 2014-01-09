@@ -1,0 +1,18 @@
+
+
+=== Attribute Selection on all input data ===
+
+Search Method:
+	Attribute ranking.
+
+Attribute Evaluator (supervised, Class (nominal): 5 class):
+	Chi-squared Ranking Filter
+
+Ranked attributes:
+268.419  3 petallength
+266.908  4 petalwidth
+126.413  1 sepallength
+ 70.64   2 sepalwidth
+
+Selected attributes: 3,4,1,2 : 4
+

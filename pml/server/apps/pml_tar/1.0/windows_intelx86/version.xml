@@ -1,0 +1,34 @@
+<version>
+   <file>
+      <physical_name>wrapper_25825_windows_intelx86.exe</physical_name>
+      <main_program/>
+   </file>
+   <file>
+      <physical_name>pml_tar_1.0_windows_intelx86.exe</physical_name>
+      <logical_name>pml_tar</logical_name>
+   </file>
+   <file>
+      <physical_name>weka_windows_intelx86.jar</physical_name>
+      <logical_name>weka.jar</logical_name>
+      <copy_file/>
+   </file>
+   <file>
+      <physical_name>waffles_cluster_windows_intelx86.exe</physical_name>
+      <logical_name>waffles_cluster.exe</logical_name>
+      <copy_file/>
+   </file>
+   <file>
+      <physical_name>waffles_dimred_windows_intelx86.exe</physical_name>
+      <logical_name>waffles_dimred.exe</logical_name>
+      <copy_file/>
+   </file>
+   <file>
+      <physical_name>waffles_learn_windows_intelx86.exe</physical_name>
+      <logical_name>waffles_learn.exe</logical_name>
+      <copy_file/>
+   </file>
+   <file>
+      <physical_name>pml_tar_job_1.0_windows_intelx86.xml</physical_name>
+      <logical_name>job.xml</logical_name>
+   </file>
+</version>

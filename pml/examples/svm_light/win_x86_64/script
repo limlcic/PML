@@ -1,0 +1,5 @@
+perl arff2svmlight.pl train.arff train.dat
+perl arff2svmlight.pl test.arff test.dat
+svm_learn -z c -t 2 -c 3 -g 1 train.dat train.model > log.txt
+svm_classify test.dat train.model pre.txt > log_test.txt
+perl svmlight_out_change.pl pre.txt test.arff out.txt

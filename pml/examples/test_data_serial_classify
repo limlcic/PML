@@ -1,0 +1,13 @@
+#This example shows use the serial file to generate the test data from train data
+#Note that when use test data file, Cluster and Variable selection methods will not be supported
+#The template of the serial file can be found in ./data/test_serial_iris
+
+NAME=test_data_serial_classify
+FILE=./pml/examples/data/iris.arff
+
+STEP=tt
+TT_ARG=1,2
+TT_ARG_OPT=1 -K _ON_;_OFF_,2 -R 1.0E****-6:-1:-8
+TEST_FILE_SERIAL=./pml/examples/data/test_serial_iris
+OUTER_FOLDS=1
+INNER_FOLDS=5

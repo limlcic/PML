@@ -1,0 +1,8 @@
+#This example shows that using just one method (logistic regression) with parameter optimization to classify the data.
+NAME=single_method_PO_classify
+FILE=./pml/examples/data/iris.arff
+STEP=tt
+TT_ARG=2
+TT_ARG_OPT=2 -R 1.0E****-6:-1:-8
+INNER_FOLDS=5
+OUTER_FOLDS=5

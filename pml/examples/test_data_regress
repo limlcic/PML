@@ -1,0 +1,12 @@
+#This example shows use test data file
+#Note that when use test data file, Cluster and Variable selection methods will not be supported
+#It means that the test data file is just support modeling methods.
+NAME=test_data_regress
+FILE=./pml/examples/data/cpu.arff
+
+STEP=tt
+TT_ARG=4,5
+TT_ARG_OPT=4 -S 0:2,5 -G 2^0:-1:-2
+TEST_FILE=./pml/examples/data/cpu.arff
+OUTER_FOLDS=1
+INNER_FOLDS=5

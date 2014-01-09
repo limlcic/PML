@@ -1,0 +1,14 @@
+#This example shows that using two methods after cluster and variable selection methods with parameter optimization to regress the data.
+NAME=muti_method_Fea_Clu_PO_regress
+FILE=./pml/examples/data/cpu.arff
+STEP=fea,clu,tt
+CLUSTER_ARG=1,2
+CLUSTER_OUT_INSTANCES=0.5,120
+CLUSTER_ARG_OPT=1 -N 2;4
+FEATURE_SELECT_ARG=3
+FEATURE_OUT_FEATURES=3,all
+FEATURE_ARG_OPT=3 -W _ON_;_OFF_ -K 10^0:1:2
+TT_ARG=4,5
+TT_ARG_OPT=4 -S 0:2,5 -G 2^0:-2:-2
+INNER_FOLDS=5
+OUTER_FOLDS=5

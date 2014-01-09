@@ -1,0 +1,7 @@
+#This example shows that using just one method (Gaussian Processes regression) to regress the data.
+NAME=single_method_regress
+FILE=./pml/examples/data/cpu.arff
+STEP=tt
+TT_ARG=5
+INNER_FOLDS=5
+OUTER_FOLDS=5

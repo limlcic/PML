@@ -1,0 +1,26 @@
+
+
+=== Attribute Selection on all input data ===
+
+Search Method:
+	Greedy Stepwise (forwards).
+	Start set: no attributes
+	Merit of best subset found:    0.887
+
+Attribute Subset Evaluator (supervised, Class (nominal): 5 class):
+	CFS Subset Evaluator
+	Including locally predictive attributes
+
+Selected attributes: 3,4 : 2
+                     petallength
+                     petalwidth
+
+
+=== Attribute selection 10 fold cross-validation (stratified), seed: 1 ===
+
+number of folds (%)  attribute
+           0(  0 %)   1 sepallength
+           0(  0 %)   2 sepalwidth
+          10(100 %)   3 petallength
+          10(100 %)   4 petalwidth
+

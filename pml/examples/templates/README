@@ -1,0 +1,51 @@
+PML integrates 3rd-party program by command line interface, and identifies the output by the provided templates in this folder. Descriptions of them are as follows.
+
+1 Templates for cluster:
+1.1 template_cluster1
+A standard output format of WEKA. The first list represents the serial of instances, and the second list represents the clustered class of each instance.
+
+1.2 template_cluster2
+A simplified template. Only one list represents the clustered class of each instance. The serial is the same as the sequence of the input data.
+
+1.3 template_cluster3
+An ARFF format data file. Sometimes 3rd-party program generates the data file directly, and in this case, the dimensionality reduction of PML would be invalid.
+
+
+2 Templates for variable selection:
+2.1 template_VarSeletion1
+A standard output format of WEKA, and the useful line is the line begins with ‘Selected attributes: …’
+
+2.2 template_VarSeletion2
+A simplified template. Only retains the useful line of template_VarSeletion1.
+
+2.3 template_VarSeletion3
+A standard output format of WEKA, and this template lists the rank of the variables.
+
+2.4 template_VarSeletion4
+A simplified template. Only retains the useful part of template_VarSeletion3.
+
+2.5 template_VarSeletion5
+A standard output format of WEKA, and this template lists the output when n-fold validation is utilized. The variable would be selected finally if it has been selected more than FEATURE_THRESHOLD times.
+
+2.6 template_VarSeletion6
+A simplified template. Only retains the useful part of template_VarSeletion5.
+
+2.7 template_VarSeletion7
+An ARFF format data file. Sometimes 3rd-party program generates the data file directly, and in this case, the dimensionality reduction of PML would be invalid.
+
+
+3 Templates for modeling:
+3.1 template_TrainTest1
+A standard classify output format of WEKA. The five lists in it are: instances, actual classes, predicted classes, errors, predictions
+
+3.2 template_TrainTest2
+A simplified template of template_TrainTest1. Only the list of predicted classes is retained.
+
+3.3 template_TrainTest3
+A standard regress output format of WEKA. The four lists in it are: instances, actual values, predicted values, errors
+
+3.4 template_TrainTest4
+A simplified template of template_TrainTest3. Only the list of predicted values is retained.
+
+Users could use any of the templates to integrate 3rd-party software into PML.
+

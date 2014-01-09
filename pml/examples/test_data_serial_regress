@@ -1,0 +1,13 @@
+#This example shows use the serial file to generate the test data from train data
+#Note that when use test data file, Cluster and Variable selection methods will not be supported
+#The template of the serial file can be found in ./data/test_serial_cpu
+
+NAME=test_data_serial_regress
+FILE=./pml/examples/data/cpu.arff
+
+STEP=tt
+TT_ARG=4,5
+TT_ARG_OPT=4 -S 0:2,5 -G 2^0:-1:-2
+TEST_FILE_SERIAL=./pml/examples/data/test_serial_cpu
+OUTER_FOLDS=1
+INNER_FOLDS=5

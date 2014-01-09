@@ -1,0 +1,153 @@
+#To add method, please refer to the sections 4.2 and 4.3 in PML_manual.pdf
+
+1.weka weka.classifiers.bayes.NaiveBayes
+2.weka weka.classifiers.functions.Logistic -R 1.0E-8 -M -1
+3.weka weka.classifiers.trees.RandomForest -I 10 -K 0 -S 1
+4.weka weka.classifiers.functions.LinearRegression -S 0 -R 1.0E-8
+5.weka weka.classifiers.functions.GaussianProcesses -L 1.0 -N 0 -K "weka.classifiers.functions.supportVector.RBFKernel -C 250007 -G 1.0"
+6.weka weka.classifiers.functions.RBFNetwork -B 2 -S 1 -R 1.0E-8 -M -1 -W 0.1
+7.weka weka.classifiers.meta.AdaBoostM1 -P 100 -S 1 -I 10 -W weka.classifiers.trees.DecisionStump
+
+#waffles
+8.waffles waf_baseline
+9.waffles waf_cvdt
+10.waffles waf_decisiontree
+11.waffles waf_gaussianprocess
+12.waffles waf_hodgepodge
+13.waffles waf_knn
+14.waffles waf_linear
+15.waffles waf_meanmarginstree
+16.waffles waf_naivebayes
+17.waffles waf_naiveinstance
+18.waffles waf_neuralnet
+19.waffles waf_randomforest
+20.waffles waf_reservoir
+
+
+#weka.bayes
+21.weka weka.classifiers.bayes.AODE -F 1
+22.weka weka.classifiers.bayes.AODEsr -F 1 -M 1.0 -C 50
+23.weka weka.classifiers.bayes.BayesianLogisticRegression -D -Tl 5.0E-4 -S 0.5 -H 1 -V 0.27 -R R:0.01-316,3.16 -P 1 -F 2 -seed 1 -I 100 -N
+24.weka weka.classifiers.bayes.BayesNet -D -Q weka.classifiers.bayes.net.search.local.K2 -- -P 1 -S BAYES -E weka.classifiers.bayes.net.estimate.SimpleEstimator -- -A 0.5
+25.weka weka.classifiers.bayes.ComplementNaiveBayes -S 1.0
+26.weka weka.classifiers.bayes.DMNBtext -I 1
+27.weka weka.classifiers.bayes.HNB
+28.weka weka.classifiers.bayes.NaiveBayes
+29.weka weka.classifiers.bayes.NaiveBayesMultinomial
+30.weka weka.classifiers.bayes.NaiveBayesMultinomialUpdateable
+31.weka weka.classifiers.bayes.NaiveBayesSimple
+32.weka weka.classifiers.bayes.NaiveBayesUpdateable
+33.weka weka.classifiers.bayes.WAODE
+
+
+
+#weka.function
+34.weka weka.classifiers.functions.GaussianProcesses -L 1.0 -N 0 -K "weka.classifiers.functions.supportVector.RBFKernel -C 250007 -G 1.0"
+35.weka weka.classifiers.functions.IsotonicRegression
+36.weka weka.classifiers.functions.LeastMedSq -S 4 -G 0
+37.weka weka.classifiers.functions.LibLINEAR -S 1 -C 1.0 -E 0.01 -B 1.0
+38.weka weka.classifiers.functions.LibSVM -S 0 -K 2 -D 3 -G 0.0 -R 0.0 -N 0.5 -M 40.0 -C 1.0 -E 0.001 -P 0.1 -seed 1
+39.weka weka.classifiers.functions.LinearRegression -S 0 -R 1.0E-8
+40.weka weka.classifiers.functions.Logistic -R 1.0E-8 -M -1
+41.weka weka.classifiers.functions.MultilayerPerceptron -L 0.3 -M 0.2 -N 500 -V 0 -S 0 -E 20 -H a
+42.weka weka.classifiers.functions.PaceRegression -E eb
+43.weka weka.classifiers.functions.PLSClassifier -filter "weka.filters.supervised.attribute.PLSFilter -C 20 -M -A PLS1 -P center"
+44.weka weka.classifiers.functions.RBFNetwork -B 2 -S 1 -R 1.0E-8 -M -1 -W 0.1
+45.weka weka.classifiers.functions.SimpleLinearRegression
+46.weka weka.classifiers.functions.SimpleLogistic -I 0 -M 500 -H 50 -W 0.0
+47.weka weka.classifiers.functions.SMO -C 1.0 -L 0.001 -P 1.0E-12 -N 0 -V -1 -W 1 -K "weka.classifiers.functions.supportVector.PolyKernel -C 250007 -E 1.0"
+48.weka weka.classifiers.functions.SMOreg -C 1.0 -N 0 -I "weka.classifiers.functions.supportVector.RegSMOImproved -L 0.001 -W 1 -P 1.0E-12 -T 0.001 -V" -K "weka.classifiers.functions.supportVector.PolyKernel -C 250007 -E 1.0"
+49.weka weka.classifiers.functions.SPegasos -F 0 -L 1.0E-4 -E 500
+50.weka weka.classifiers.functions.VotedPerceptron -I 1 -E 1.0 -S 1 -M 10000
+51.weka weka.classifiers.functions.Winnow -I 1 -A 2.0 -B 0.5 -H -1.0 -W 2.0 -S 1
+
+
+
+#weka.lazy
+52.weka weka.classifiers.lazy.IB1
+53.weka weka.classifiers.lazy.IBk -K 1 -W 0 -A "weka.core.neighboursearch.LinearNNSearch -A \"weka.core.EuclideanDistance -R first-last\""
+54.weka weka.classifiers.lazy.KStar -B 20 -M a
+55.weka weka.classifiers.lazy.LBR
+56.weka weka.classifiers.lazy.LWL -U 0 -K -1 -A "weka.core.neighboursearch.LinearNNSearch -A \"weka.core.EuclideanDistance -R first-last\"" -W weka.classifiers.trees.DecisionStump
+
+
+
+#weka.meta
+57.weka weka.classifiers.meta.AdaBoostM1 -P 100 -S 1 -I 10 -W weka.classifiers.trees.DecisionStump
+58.weka weka.classifiers.meta.AdditiveRegression -S 1.0 -I 10 -W weka.classifiers.trees.DecisionStump
+59.weka weka.classifiers.meta.AttributeSelectedClassifier -E "weka.attributeSelection.CfsSubsetEval " -S "weka.attributeSelection.BestFirst -D 1 -N 5" -W weka.classifiers.trees.J48 -- -C 0.25 -M 2
+60.weka weka.classifiers.meta.Bagging -P 100 -S 1 -I 10 -W weka.classifiers.trees.REPTree -- -M 2 -V 0.001 -N 3 -S 1 -L -1
+61.weka weka.classifiers.meta.ClassificationViaClustering -W weka.clusterers.SimpleKMeans -- -N 2 -A "weka.core.EuclideanDistance -R first-last" -I 500 -S 10
+62.weka weka.classifiers.meta.ClassificationViaRegression -W weka.classifiers.trees.M5P -- -M 4.0
+63.weka weka.classifiers.meta.CVParameterSelection -X 10 -S 1 -W weka.classifiers.rules.ZeroR
+64.weka weka.classifiers.meta.Dagging -F 10 -S 1 -W weka.classifiers.functions.SMO -- -C 1.0 -L 0.001 -P 1.0E-12 -N 0 -V -1 -W 1 -K "weka.classifiers.functions.supportVector.PolyKernel -C 250007 -E 1.0"
+65.weka weka.classifiers.meta.Decorate -E 15 -R 1.0 -S 1 -I 50 -W weka.classifiers.trees.J48 -- -C 0.25 -M 2
+66.weka weka.classifiers.meta.END -S 1 -I 10 -W weka.classifiers.meta.nestedDichotomies.ND -- -S 1 -W weka.classifiers.trees.J48 -- -C 0.25 -M 2
+67.weka weka.classifiers.meta.FilteredClassifier -F "weka.filters.supervised.attribute.Discretize -R first-last" -W weka.classifiers.trees.J48 -- -C 0.25 -M 2
+68.weka weka.classifiers.meta.Grading -X 10 -M "weka.classifiers.rules.ZeroR " -S 1 -B "weka.classifiers.rules.ZeroR "
+69.weka weka.classifiers.meta.LogitBoost -P 100 -F 0 -R 1 -L -1.7976931348623157E308 -H 1.0 -S 1 -I 10 -W weka.classifiers.trees.DecisionStump
+70.weka weka.classifiers.meta.MultiBoostAB -C 3 -P 100 -S 1 -I 10 -W weka.classifiers.trees.DecisionStump
+71.weka weka.classifiers.meta.MultiClassClassifier -M 0 -R 2.0 -S 1 -W weka.classifiers.functions.Logistic -- -R 1.0E-8 -M -1
+72.weka weka.classifiers.meta.MultiScheme -X 0 -S 1 -B "weka.classifiers.rules.ZeroR "
+
+
+
+#weka.mi
+73.weka weka.classifiers.mi.CitationKNN -R 1 -C 1 -H 1
+74.weka weka.classifiers.mi.MDD -N 1
+75.weka weka.classifiers.mi.MIBoost -R 10 -B 0 -W weka.classifiers.rules.ZeroR
+76.weka weka.classifiers.mi.MIDD -N 1
+77.weka weka.classifiers.mi.MIEMDD -S 1 -N 1
+78.weka weka.classifiers.mi.MILR -R 1.0E-6 -A 0
+79.weka weka.classifiers.mi.MINND -K 1 -S 1 -E 1
+80.weka weka.classifiers.mi.MIOptimalBall -N 0
+81.weka weka.classifiers.mi.MISMO -C 1.0 -L 0.001 -P 1.0E-12 -N 0 -V -1 -W 1 -K "weka.classifiers.mi.supportVector.MIPolyKernel -C 250007 -E 1.0"
+82.weka weka.classifiers.mi.MISVM -C 1.0 -N 0 -K "weka.classifiers.functions.supportVector.PolyKernel -C 250007 -E 1.0"
+83.weka weka.classifiers.mi.MIWrapper -P 2 -A 3 -W weka.classifiers.bayes.NaiveBayes
+84.weka weka.classifiers.mi.SimpleMI -M 1 -W weka.classifiers.rules.ZeroR
+
+
+#weka.misc
+85.weka weka.classifiers.misc.HyperPipes
+86.weka weka.classifiers.misc.VFI -B 0.6
+
+
+
+#weka.rule
+87.weka weka.classifiers.rules.ConjunctiveRule -N 3 -M 2.0 -P -1 -S 1
+88.weka weka.classifiers.rules.DecisionTable -X 1 -S "weka.attributeSelection.BestFirst -D 1 -N 5"
+89.weka weka.classifiers.rules.DTNB -X 1
+90.weka weka.classifiers.rules.JRip -F 3 -N 2.0 -O 2 -S 1
+91.weka weka.classifiers.rules.M5Rules -M 4.0
+92.weka weka.classifiers.rules.NNge -G 5 -I 5
+93.weka weka.classifiers.rules.OneR -B 6
+94.weka weka.classifiers.rules.PART -M 2 -C 0.25 -Q 1
+95.weka weka.classifiers.rules.Prism
+96.weka weka.classifiers.rules.Ridor -F 3 -S 1 -N 2.0
+97.weka weka.classifiers.rules.ZeroR
+
+
+#weka.tree
+98.weka weka.classifiers.trees.ADTree -B 10 -E -3
+99.weka weka.classifiers.trees.BFTree -S 1 -M 2 -N 5 -C 1.0 -P POSTPRUNED
+100.weka weka.classifiers.trees.DecisionStump
+101.weka weka.classifiers.trees.FT -I 15 -F 0 -M 15 -W 0.0
+102.weka weka.classifiers.trees.Id3
+103.weka weka.classifiers.trees.J48 -C 0.25 -M 2
+104.weka weka.classifiers.trees.J48graft -C 0.25 -M 2
+105.weka weka.classifiers.trees.LADTree -B 10
+106.weka weka.classifiers.trees.LMT -I -1 -M 15 -W 0.0
+107.weka weka.classifiers.trees.M5P -M 4.0
+108.weka weka.classifiers.trees.NBTree
+109.weka weka.classifiers.trees.RandomForest -I 10 -K 0 -S 1
+110.weka weka.classifiers.trees.RandomTree -K 0 -M 1.0 -S 1
+111.weka weka.classifiers.trees.REPTree -M 2 -V 0.001 -N 3 -S 1 -L -1
+112.weka weka.classifiers.trees.SimpleCart -S 1 -M 2.0 -N 5 -C 1.0
+
+
+
+
+
+
+
+

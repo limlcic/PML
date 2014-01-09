@@ -1,0 +1,2 @@
+chmod a+x ./waffles_dimred
+./waffles_dimred attributeselector data.arff -out 5 out.txt -seed 1 > waf_log.txt

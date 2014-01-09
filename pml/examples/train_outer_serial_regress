@@ -1,0 +1,17 @@
+#This example shows that use the serial file to generate n-fold validation train-test data from train data serial files
+#Note that when use test data file, Cluster and Variable selection methods will not be supported
+#The template of the serial file can be found in ./data/serial_outer_cpu
+#This example uses serial files which contain information of train data,
+#and has the same result with example test_outer_serial_regress
+
+NAME=train_outer_serial_regress
+FILE=./pml/examples/data/cpu.arff
+
+STEP=tt
+TT_ARG=4,5
+TT_ARG_OPT=4 -S 0:2,5 -G 2^0:-1:-2
+OUTER_FOLD_TRAIN_FILES_SERIAL=./pml/examples/data/serial_outer_cpu/train_outer1 , ./pml/examples/data/serial_outer_cpu/train_outer2
+OUTER_FOLD_TRAIN_FILES_SERIAL=./pml/examples/data/serial_outer_cpu/train_outer3 , ./pml/examples/data/serial_outer_cpu/train_outer4
+OUTER_FOLD_TRAIN_FILES_SERIAL=./pml/examples/data/serial_outer_cpu/train_outer5
+#OUTER_FOLDS=5
+INNER_FOLDS=5

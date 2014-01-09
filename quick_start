@@ -1,0 +1,18 @@
+#The quick start with PML-Desktop is used as an example. Besides, PML-Server also shares the
+#same process as it uses the similar script as PML-Desktop does.
+# 1. Make sure Perl together with its modules and JAVA VM are installed.
+# 2. Open a command line window and locate the work path under the folder (use cd command),
+#    then type in:
+#       perl pml_desktop.pl quick_start
+# 3. The process would be completed in few seconds, and the results can be found in
+#       ‘pml/results/quick_start/results.html’
+#More examples can be found and tried in pml/examples. The details of each example can be
+#found in each annotation and the README file in the folder
+
+NAME=quick_start
+FILE=./pml/examples/data/iris.arff
+STEP=tt
+TT_ARG=1,2
+TT_ARG_OPT=1 -K _ON_;_OFF_,2 -R 1.0E****-6:-1:-8
+INNER_FOLDS=5
+OUTER_FOLDS=5

@@ -1,0 +1,12 @@
+#This example shows use test data file
+#Note that when use test data file, Cluster and Variable selection methods will not be supported
+#It means that the test data file is just support modeling methods.
+NAME=test_data_classify
+FILE=./pml/examples/data/iris.arff
+
+STEP=tt
+TT_ARG=1,2
+TT_ARG_OPT=1 -K _ON_;_OFF_,2 -R 1.0E****-6:-1:-8
+TEST_FILE=./pml/examples/data/iris.arff
+OUTER_FOLDS=1
+INNER_FOLDS=5

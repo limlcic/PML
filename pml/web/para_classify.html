@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Terminology of classify output</title>
+
+<style type="text/css">
+@import url("../style.css");
+</style>
+</head>
+<body>
+<a><img src = "logo.gif" ></a>
+<h2>Terminology of classify output</h2>
+<p>Generally, there are 4 possible outcomes
+ <img src = form/TP.jpg height = 14>,
+ <img src = form/TN.jpg height = 14>,
+  <img src = form/FP.jpg height = 14> and 
+  <img src = form/FN.jpg height = 14> in a classification task.
+ <br></p>
+
+<p>For both binary-class and muti-class classification, the outcomes could both be labled as either 
+<I>positive</I> (<img src = form/P.jpg height = 14>) or <I>negtive</I> (<img src = form/N.jpg height = 14>).
+ If an instance is predicted as <I>positive</I> and its acture value is 
+<I>positive</I> as well, then this predicting outcome is called a <img src = form/TP.jpg height = 14>; It called a <img src = form/FP.jpg height = 14> 
+when the acture value is <I>negtive</I>. Similarly, an outcome is called a <img src = form/TN.jpg height = 14> when both of the predicted 
+value and acture value are <I>negtive</I>; While the acture value is <I>positive</I>, the outcome 
+would be a <img src = form/FN.jpg height = 14>.<br>
+ </p>
+ 
+<p>Some derivations based on the four outcomes, detailed descriptions are listed as follows:</p>
+<table id = "tss" border = 2 cellpadding=5>
+
+<tr>
+<td align = "center">Name</td>
+<td align = "center">Description</td>
+<td align = "center">Formula</td>
+</tr>
+
+<tr>
+<td><B>TPR</B></td>
+<td><I>True Positive Rate</I>, also called <I>Sensitivity</I>, <I>Hit rate</I>, <I>Recall</I></td>
+<td><img src = form/TPR.jpg height = 50></td>
+</tr>
+
+<tr><td><B>FPR</B></td>
+<td><I>False Positive Rate</I>, also called <I>Fall-out</I></td>
+<td><img src = form/FPR.jpg height = 50></td> </tr>
+
+<tr><td><B>ACC</B></td>
+<td><I>Accuracy</I></td>
+<td><img src = form/ACC.jpg height = 50></td> </tr>
+
+<tr><td><B>SPC</B></td>
+<td><I>Specificity</I>, also called <I>True Negative Rate</I></td>
+<td><img src = form/SPC.jpg height = 50></td> </tr>
+
+<tr><td><B>PPV</B></td>
+<td><I>Positive Predictive Value</I>, also called <I>Precision</I></td>
+<td><img src = form/PPV.jpg height = 50></td> </tr>
+
+<tr><td><B>NPV</B></td>
+<td><I>Negative Predictive Value</I> </td>
+<td><img src = form/NPV.jpg height = 50></td> </tr>
+
+<tr><td><B>FDR</B></td>
+<td><I>False Discovery Rate</I></td>
+<td><img src = form/FDR.jpg height = 50></td> </tr>
+
+<tr><td><B>MCC</B></td>
+<td><I>Matthews Correlation Coefficient</I></td>
+<td><img src = form/MCC.jpg height = 50><br>
+Where <br>
+<img src = form/PG.jpg height = 15><br>
+<img src = form/NG.jpg height = 15><br>
+<img src = form/PL.jpg height = 15><br>
+<img src = form/NL.jpg height = 15></td>
+ </tr>
+</table>
+<p>In cross validation, a testing data would be separated into some subsets (folds).
+ The four outcomes and other derivations are generally in order to describe the predictions of each subset.
+ If describing the whole dataset, one choice is to calculate the average. Alternatively, another is
+ the description <img src = form/overall.jpg height = 14>, which means to collect
+ outcome of all the subsets, and then calculate the derivations with the same formulas above.
+</p>
+
+<p><B>Reference:</B> <br>
+More detailed descriptions of the derivations could be founded at <a href = http://en.wikipedia.org/wiki/Receiver_operating_characteristic><U>Wikipedia</U></a>.</p>
+
+<p><a href="../results.html"><U>Back to home page</U></a></p>
+</body>
+</html>

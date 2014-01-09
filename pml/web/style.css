@@ -1,0 +1,117 @@
+a{
+	text-decoration:none
+}
+
+a:hover{color:#000099;text-decoration : underline; position : relative;}
+
+body {
+	font-family:Arial, Helvetica, sans-serif;
+}
+
+table#tb {
+	text-align:left;
+	/*border:1px #ccc solid;*/
+	border:solid;
+	border-collapse:collapse;	
+	font-family:Arial, Helvetica, sans-serif;
+}
+
+
+#tb th {
+	text-align:center;
+	background: buttonface;
+	font: menu;
+	/*border: 1px outset white;*/
+	border-bottom:1px solid;
+	/*color:#009;*/
+	width:40px;
+}
+#tb thead tr{
+	
+	}
+
+#tb td{
+	border-bottom:1px solid;
+}
+
+#tb td.highLight{
+	background:#e7f3f9;
+	color:#000;
+	font-weight:bold;
+		}
+#tb th.selectUp {
+	background:url(up1.png) no-repeat right center transparent  ;
+	
+}
+#tb th.selectDown {
+	background:url(down1.png) no-repeat right center transparent ;
+}
+
+
+table#tss {
+	text-align:left;
+	/*border:1px #ccc solid;*/
+	border:solid;
+	border-collapse:collapse;	
+	font-family:Arial, Helvetica, sans-serif;
+}
+
+
+#tss th {
+	text-align:center;
+	background: buttonface;
+	font: menu;
+	/*border: 1px outset white;*/
+	border-bottom:1px solid;
+	/*color:#009;*/
+}
+#tss thead tr{
+	
+	}
+#tss td{
+	border-bottom:1px solid;
+}
+
+#tss td.highLight{
+	color:#000;
+	font-weight:bold;
+		}
+#tss th.selectUp {
+	background:url(up1.png) no-repeat right center transparent  ;
+	
+}
+#tss th.selectDown {
+	background:url(down1.png) no-repeat right center transparent ;
+}
+
+.dtree {
+	font-family:Arial, Helvetica, sans-serif;
+	/*font-size: 11px;*/
+	/*color: #666;*/
+	white-space: nowrap;
+}
+.dtree img {
+	border: 0px;
+	vertical-align: middle;
+}
+.dtree a {
+	color: #333;
+	text-decoration: none;
+}
+
+.dtree a:hover{text-decoration : underline; position : relative;}
+
+.dtree a.node, .dtree a.nodeSel {
+	white-space: nowrap;
+	padding: 1px 2px 1px 2px;
+}
+.dtree a.node:hover, .dtree a.nodeSel:hover {
+	color: #333;
+	text-decoration: underline;
+}
+.dtree a.nodeSel {
+	background-color: #c0d2ec;
+}
+.dtree .clip {
+	overflow: hidden;
+}

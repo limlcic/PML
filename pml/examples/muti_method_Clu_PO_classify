@@ -1,0 +1,12 @@
+#This example shows that using two methods after cluster methods with parameter optimization to classify the data.
+#
+NAME=muti_method_Clu_PO_classify
+FILE=./pml/examples/data/iris.arff
+STEP=clu,tt
+CLUSTER_ARG=1,2
+CLUSTER_OUT_INSTANCES=0.5,120,all
+CLUSTER_ARG_OPT=1 -N 2:4
+TT_ARG=1,2
+TT_ARG_OPT=1 -K _ON_;_OFF_,2 -R 1.0E****-6:-1:-8
+INNER_FOLDS=5
+OUTER_FOLDS=5

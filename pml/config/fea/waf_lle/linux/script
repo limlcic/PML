@@ -1,0 +1,4 @@
+chmod a+x ./waffles_dimred
+perl ./cut_label.pl
+./waffles_dimred lle ./data_no_label.arff kdtree 80 40 -seed 1 > out_no_label.txt
+perl ./add_label.pl

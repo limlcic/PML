@@ -1,0 +1,2 @@
+waffles_cluster fuzzykmeans data.arff 5 -seed 1 > out_clu.txt
+perl clu_out.pl > out.txt

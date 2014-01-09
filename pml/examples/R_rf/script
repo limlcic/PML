@@ -1,0 +1,1 @@
+R --slave -f rf.r 1>log.txt 2>&1

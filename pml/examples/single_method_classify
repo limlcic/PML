@@ -1,0 +1,7 @@
+#This example shows that using just one method (logistic regression) to classify the data.
+NAME=single_method_classify
+FILE=./pml/examples/data/iris.arff
+STEP=tt
+TT_ARG=2
+INNER_FOLDS=5
+OUTER_FOLDS=5

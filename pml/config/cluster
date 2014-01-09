@@ -1,0 +1,24 @@
+#To add method, please refer to the sections 4.2 and 4.3 in PML_manual.pdf
+
+1.weka weka.clusterers.SimpleKMeans -N 2 -A "weka.core.EuclideanDistance -R first-last" -I 500 -S 10
+2.weka weka.clusterers.MakeDensityBasedClusterer -M 1.0E-6 -W weka.clusterers.SimpleKMeans -- -N 2 -A "weka.core.EuclideanDistance -R first-last" -I 500 -S 10
+3.weka weka.clusterers.Cobweb -A 1.0 -C 0.0028209479177387815 -S 42
+4.weka weka.clusterers.FarthestFirst -N 2 -S 1
+5.weka weka.clusterers.EM -I 100 -N -1 -M 1.0E-6 -S 100
+6.weka weka.clusterers.DBScan -E 0.9 -M 6 -I weka.clusterers.forOPTICSAndDBScan.Databases.SequentialDatabase -D weka.clusterers.forOPTICSAndDBScan.DataObjects.EuclidianDataObject
+7.weka weka.clusterers.FilteredClusterer -F weka.filters.AllFilter -W weka.clusterers.SimpleKMeans -- -N 2 -A "weka.core.EuclideanDistance -R first-last" -I 500 -S 10
+8.weka weka.clusterers.HierarchicalClusterer -N 2 -L SINGLE -P -A "weka.core.EuclideanDistance -R first-last"
+9.weka weka.clusterers.OPTICS -E 0.9 -M 6 -I weka.clusterers.forOPTICSAndDBScan.Databases.SequentialDatabase -D weka.clusterers.forOPTICSAndDBScan.DataObjects.EuclidianDataObject -db-output .
+10.weka weka.clusterers.CLOPE -R 2.6
+11.weka weka.clusterers.sIB -I 100 -M 0 -N 2 -R 5 -S 1
+12.weka weka.clusterers.XMeans -I 1 -M 1000 -J 1000 -L 2 -H 4 -B 1.0 -C 0.5 -D "weka.core.EuclideanDistance -R first-last" -S 10
+
+
+
+13.waffles waf_agglomerative
+14.waffles waf_fuzzykmeans
+15.waffles waf_kmeans
+16.waffles waf_kmedoids
+
+
+

@@ -1,0 +1,17 @@
+#This example shows that use the serial file to generate n-fold validation train-test data from test data serial files
+#Note that when use test data file, Cluster and Variable selection methods will not be supported
+#The template of the serial file can be found in ./data/serial_outer_iris/
+#This example uses serial files which contain information of test data,
+#and has the same result with example train_outer_serial_classify
+
+NAME=test_outer_serial_classify
+FILE=./pml/examples/data/iris.arff
+
+STEP=tt
+TT_ARG=1,2
+TT_ARG_OPT=1 -K _ON_;_OFF_,2 -R 1.0E****-6:-1:-8
+OUTER_FOLD_TEST_FILES_SERIAL=./pml/examples/data/serial_outer_iris/test_outer1 , ./pml/examples/data/serial_outer_iris/test_outer2
+OUTER_FOLD_TEST_FILES_SERIAL=./pml/examples/data/serial_outer_iris/test_outer3 , ./pml/examples/data/serial_outer_iris/test_outer4
+OUTER_FOLD_TEST_FILES_SERIAL=./pml/examples/data/serial_outer_iris/test_outer5
+#OUTER_FOLDS=5
+INNER_FOLDS=5

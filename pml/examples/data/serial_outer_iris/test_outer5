@@ -1,0 +1,32 @@
+#This is a simple serial file template for data iris.arff and be used with the example test_outer_serial_classify
+#PML will generate test data for outter 5-fold cross-valication by the files and this file is one of them.
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+91
+92
+93
+94
+95
+96
+97
+98
+99
+100
+141
+142
+143
+144
+145
+146
+147
+148
+149
+150

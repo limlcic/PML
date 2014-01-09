@@ -1,0 +1,10 @@
+library(RWeka);
+library(randomForest);
+train=read.arff('train.arff');
+test=read.arff('test.arff');
+classname=colnames(train);
+classname=classname[length(classname)];
+class_formula=as.formula( paste(classname,"~ ."));
+train.rf=randomForest(class_formula,data=train,ntree=500,mtry=3);
+test.pre=predict(train.rf,test);
+write.table(test.pre,file='out.txt',row.names=F,col.names=F,quote=F);
