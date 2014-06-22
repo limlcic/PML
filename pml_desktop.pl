@@ -111,6 +111,11 @@ our $retry_threshold = 3;
 our $compress_level = 9;
 our $round_l = 4;#the level of round, 4 means keep 4 decimal places (4.563758 => 4.5638)
 
+#timer
+our $time_switch;
+our $glo_time = time;
+our @glo_times;
+
 
 my $line;
 while($line = <FID_c>){
@@ -197,6 +202,7 @@ while($line = <FID_c>){
 	elsif($line =~ m/^ROUND_L\s*=\s*([^\n]+)/i){$round_l = $1;}
 	elsif($line =~ m/^INDEPENDENT_DATA\s*=\s*([^\n]+)/i){$independent_data = $1;}
 	elsif($line =~ m/^ONE_OUT_PER_OPT\s*=\s*([^\n]+)/i){$one_out_per_opt = $1;}
+	elsif($line =~ m/^RUN_TIME\s*=\s*([^\n]+)/i){$time_switch = $1;}
 }
 close FID_c;
 
@@ -230,8 +236,9 @@ if(@inner_fold_test_files || @inner_fold_train_files){
 init_pml_job();
 init_pml_result();
 
+push @glo_times,(time - $glo_time);
 reset_desktop("$prog_dir/results/$name") if $ARGV[1] && $ARGV[1] eq '--reset';
-
+$glo_time = time;
 
 #get core number
 my $core_muti = 1;
@@ -574,8 +581,10 @@ while ($#statue_files > 1){
 		else{
 			#if the runtime of the task exceed the time limite, restart or dump it
 			if (time - $hash_id_time{$thread_id} > $time_limit_task){
-				$thread->exit();
-				
+				#$thread->exit();
+				next if $thread->is_detached();
+	           	$thread->kill('KILL')->detach();
+	           	sleep 1;
 				my $retry_count = 0;
 				my $job_name = $hash_wait_id{$thread_id};
 				if ( $job_name =~ /_retry(\d+)$/){
@@ -638,3 +647,10 @@ while (my @threads = threads->list(threads::all)){
 #generate the output files
 analysis_out_files();
 
+if ($time_switch){
+	#Run time (beta)
+	push @glo_times,(time - $glo_time);
+	$glo_time = 0;
+	map{$glo_time += $_}@glo_times;
+	print "\nCost time $glo_time seconds\n";
+}

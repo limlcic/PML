@@ -472,6 +472,9 @@ sub job_creator_desktop{
 sub job_execute_desktop{
 	my ($wu , $name , $prog_dir) = @_;
 	@_ = (); #avoid leaking
+	$SIG{'KILL'} = sub { 
+			threads->exit(); 
+		};
 	my $retry_count;
 	my $retry_limit = 100;
 	my $wu_dir = "$prog_dir/wus/wu" . $wu ;
@@ -728,7 +731,14 @@ sub file_process_out{
 	my $isprocessed;
 	if ($step ne 'tt'){
 		if (isarff("$results_path/$script_name")){
-			move("$results_path/$script_name" , "$pml_data_path/$script_name" . '.arff');
+			my $retry_count = 0;
+			while (-f "$pml_data_path/$script_name" . '.arff' || -s "$results_path/$script_name" != -s "$pml_data_path/$script_name" . '.arff'){
+				copy("$results_path/$script_name" ,  "$pml_data_path/$script_name" . '.arff');
+				die 'retry times exceed 1000 times' if ++$retry_count > 1000;
+				sleep 1 if $retry_count > 1; 
+			}
+			#move("$results_path/$script_name" , "$pml_data_path/$script_name" . '.arff');
+			unlink "$results_path/$script_name";
 			$isprocessed = 1;
 		}
 		else{

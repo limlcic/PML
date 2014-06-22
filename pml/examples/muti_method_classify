@@ -1,7 +1,0 @@
-#This example shows that using two methods to classify the data.
-NAME=muti_method_classify
-FILE=./pml/examples/data/iris.arff
-STEP=tt
-TT_ARG=1,2
-INNER_FOLDS=5
-OUTER_FOLDS=5

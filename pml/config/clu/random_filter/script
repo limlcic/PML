@@ -1,0 +1,1 @@
+perl ./select.pl data.arff out.txt -seed 1 -remain ?,?,30 -del 1 -select ID1,ID2

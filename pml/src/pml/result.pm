@@ -20,6 +20,8 @@ use File::Copy;
 use Cwd;
 use threads;
 use threads::shared;
+use Scalar::Util qw(looks_like_number);
+
 require Exporter;
 use vars qw($VERSION @ISA @EXPORT);
 @ISA = qw(Exporter);
@@ -101,7 +103,8 @@ sub read_out_file{
 	}@out_list;
 	@out_list = grep{ $_ !~ /^\./ && $_ !~ /^\*/ && $_ !~ /^\+/ && $_ !~ /^\\/}@out_list;
 	
-	if ($#labels == 0 && $labels[0] =~ /REAL/i){
+#	if ($#labels == 0 && $labels[0] =~ /REAL/i){
+	if ($#labels == 0){
 		@org_list = grep{$_ || looks_like_number($_)}@org_list;
 		@out_list = grep{$_ || looks_like_number($_)}@out_list;
 	}
@@ -186,7 +189,8 @@ sub get_labels{
 		if ($line =~ /^\@ATTRIBUTE\s+[^\s]+\s+\{([^\}]+)/i){
 			@labels = split(/,/,$1);
 		}
-		elsif ($line =~ /^\@ATTRIBUTE\s+[^\s]+\s+(REAL)/i){
+#		elsif ($line =~ /^\@ATTRIBUTE\s+[^\s]+\s+(REAL)/i){
+	elsif ($line =~ /^\@ATTRIBUTE\s+[^\s]+\s+(\w+)\s/i){
 			@labels = ($1);
 		}
 		if ($line =~ /^\@data/i){last;}
@@ -349,6 +353,9 @@ sub cal_acc_r{
 	#Calculate the CC, MAE, RMSE, RAE, and RRSE through the modeling output
 	my @org_list = @{$_[0]};
 	my @out_list = @{$_[1]};
+#	if ($#out_list == -1){
+#		print 'warning!' . "\n";
+#	}
 	my $org_mean = mean_list(@org_list);
 	my $out_mean = mean_list(@out_list);
 	#RMSE
@@ -523,7 +530,7 @@ sub analysis_out_files{
 	my $i, my $p_name, my $step, my $nf_name, my $gd_name;
 	my @wait_units;
 	
-	print "Step 1: analysis the outputs of tasks and gernate the results.\n" if !$main::silent;
+	print "Step 1: analyze the outputs of tasks and gernate the results.\n" if !$main::silent;
 	my $complete_jobs = 0;
 	my $total_jobs = scalar @complete_files + scalar @err_files;
 	
@@ -653,14 +660,20 @@ sub analysis_out_files{
 #			}
 #		}
 #	}
-
+	my $task_num = int( scalar(@wait_units) / $main::core_number ) - 1;
+	$task_num = 1 if $task_num < 1;
+	$task_num = 49 if $task_num > 49;
 	while ($#wait_units >= 0 || scalar(threads->list()) > 0){
 		while (scalar(threads->list()) < $main::core_number && $#wait_units >= 0){
-			my $j = 49;
+			#my $j = 49;
+			my $j = $task_num;
 			$j = $#wait_units if $j > $#wait_units;
 			my $thread = threads->create(sub{
 				my ($hash_isok_l , @units) = @_;
 				@_ = ();
+				$SIG{'KILL'} = sub { 
+					threads->exit(); 
+				};
 				for (@units){
 					get_relate_file($_,$hash_isok_l);
 				}
@@ -678,14 +691,18 @@ sub analysis_out_files{
 				$thread->join();
 				delete $hash_id_name{$tid};
 				delete $hash_id_time{$tid};
-				$complete_jobs += 50;
+				#$complete_jobs += 50;
+				$complete_jobs += $task_num + 1;
 				$complete_jobs = $total_jobs if $complete_jobs > $total_jobs;
 				show_out_files_progress($complete_jobs,$total_jobs) if !$main::silent;
 			}
 			else{
 				if (time - $hash_id_time{$tid} > $main::time_limit_result){
 					push @wait_units,split(/ /,$hash_id_name{$tid});
-					$thread->exit();
+					#$thread->exit();
+					next if $thread->is_detached();
+		           	$thread->kill('KILL')->detach();
+		           	sleep 1;
 					$hash_name_repeat{$hash_id_name{$tid}}++;
 					die "PML has repeat over 100 times for one result analysis:\n".$hash_id_name{$tid}.
 					"\nplease retry PML or check the parameters.\n" if $hash_name_repeat{$hash_id_name{$tid}} > 100;
@@ -992,6 +1009,9 @@ sub get_relate_file{
 		return;
 	}
 	if ($step eq 'tt'){
+#		if ($file =~ /t6w_train_fea_-1_all_tt/){
+#			print 'warning!' . "\n";
+#		}
 		my @out = read_out_file($file);
 		if ($main::regress){
 			@out = cal_acc_r(@out);
@@ -1644,7 +1664,9 @@ sub analysis_nfold{
 			sub{
 				my ($nf_name) = @_;
 				@_ = (); #avoid leaking
-				
+				$SIG{'KILL'} = sub { 
+					threads->exit(); 
+				};
 				open(FID_H,">$main::prog_dir/results/$main::name/results/$nf_name" . '.html');
 				#head
 				print FID_H '<!DOCTYPE html>',"\n";
@@ -1839,7 +1861,10 @@ sub analysis_nfold{
 			else{
 				if (time - $hash_id_time{$tid} > $main::time_limit_result){
 					push @nf_names,$hash_id_name{$tid};
-					$thread->exit();
+					#$thread->exit();
+					next if $thread->is_detached();
+		           	$thread->kill('KILL')->detach();
+		           	sleep 1;
 					$hash_name_repeat{$hash_id_name{$tid}}++;
 					die "PML has repeat over 100 times for one result analysis:\n".$hash_id_name{$tid}.
 					"\nplease retry PML or check the parameters.\n" if $hash_name_repeat{$hash_id_name{$tid}} > 100;
@@ -2327,6 +2352,9 @@ sub analysis_grid{
 			my $thread = threads->create(sub{
 				my ($gd_name) = @_;
 				@_ = (); #avoid leaking
+				$SIG{'KILL'} = sub { 
+					threads->exit(); 
+				};
 				my @accs, my @acc;
 				my @best_accs;
 				init_best_accs(\@best_accs,!$main::regress);
@@ -2476,7 +2504,10 @@ sub analysis_grid{
 					$hash_name_repeat{$hash_id_name{$tid}}++;
 					die "PML has repeat over 100 times for one result analysis:\n".$hash_id_name{$tid}.
 					"\nplease retry PML or check the parameters.\n" if $hash_name_repeat{$hash_id_name{$tid}} > 100;
-					$thread->exit();
+					#$thread->exit();
+					next if $thread->is_detached();
+		           	$thread->kill('KILL')->detach();
+		           	sleep 1;
 					delete $hash_id_name{$tid};
 					delete $hash_id_time{$tid};
 				}

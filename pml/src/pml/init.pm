@@ -121,11 +121,11 @@ sub analysis_data{
 				my @classes = split(m/,/,$1);
 				my $classes_num = @classes;
 				$is4class = 1;
-				print FID_OUT "responce data type is for classify\nhave $classes_num classes: $1\n";
+				print FID_OUT "responce data type is for classification\nhave $classes_num classes: $1\n";
 			}
 			else{
 				$is4class = 0;
-				print FID_OUT "responce data type is for regress\n";
+				print FID_OUT "responce data type is for regression\n";
 			}
 		}
 		elsif ($control == 1){
@@ -379,8 +379,9 @@ sub creat_job_clu_3rd{
 				for $k(0..$#cluster_out_instances){
 					if ($cluster_out_instances[$k] ne 'all'){
 						$out_filename = $scriptname . '_clu_' . $i .  '.' . $sub_parm . '_' .$k;
-						modify_waffles_out_num('grid',$arg_name) if $third_arg_type eq 'waffles';
+						modify_waffles_out_num('grid',$arg_name,$cluster_out_instances[$k]) if $third_arg_type eq 'waffles';
 						print_step_prop("$main::prog_dir/results/$main::name/stepprops/$out_filename",'clu',$cluster_out_instances[$k],$main::seed_clu);				
+						compress_dir($arg_name,'grid') if $third_arg_type eq 'waffles';
 						compress_dir($arg_name,'grid') if !-e "$main::prog_dir/config/grid/$arg_name" . '.tgz';
 						copy("$main::prog_dir/config/grid/$arg_name" . '.tgz' , "$main::prog_dir/results/$main::name/scripts/$out_filename");				
 						write_status($out_filename,'1');
@@ -413,8 +414,9 @@ sub creat_job_clu_3rd{
 			for $j(0..$#cluster_out_instances){
 				if ($cluster_out_instances[$j] ne 'all'){
 					$out_filename = $scriptname . '_clu_' . $i . '_' .$j;
-					modify_waffles_out_num('grid',$arg_name) if $third_arg_type eq 'waffles';				
+					modify_waffles_out_num('grid',$arg_name,$cluster_out_instances[$j]) if $third_arg_type eq 'waffles';				
 					print_step_prop("$main::prog_dir/results/$main::name/stepprops/$out_filename",'clu',$cluster_out_instances[$j],$main::seed_clu);
+					compress_dir($arg_name,$arg_type) if $third_arg_type eq 'waffles';
 					compress_dir($arg_name,$arg_type) if !-e "$main::prog_dir/config/$arg_type/$arg_name" . '.tgz';
 					copy("$main::prog_dir/config/$arg_type/$arg_name" . '.tgz' , "$main::prog_dir/results/$main::name/scripts/$out_filename");				
 					write_status($out_filename,'1');
@@ -666,6 +668,7 @@ sub creat_job_fea_3rd{
 						$out_filename = $scriptname . '_fea_' . $i .  '.' . $sub_parm . '_' .$k;
 						modify_waffles_out_num('grid',$arg_name,$feature_out_features[$k]) if $third_arg_type eq 'waffles';
 						print_step_prop("$main::prog_dir/results/$main::name/stepprops/$out_filename",'fea',$feature_out_features[$k],$main::feautre_threshold);
+						compress_dir($arg_name,'grid') if $third_arg_type eq 'waffles';
 						compress_dir($arg_name,'grid') if !-e "$main::prog_dir/config/grid/$arg_name" . '.tgz';
 						copy("$main::prog_dir/config/grid/$arg_name" . '.tgz' , "$main::prog_dir/results/$main::name/scripts/$out_filename");				
 						write_status($out_filename,'1');
@@ -700,6 +703,7 @@ sub creat_job_fea_3rd{
 					$out_filename = $scriptname . '_fea_' . $i . '_' .$j;
 					modify_waffles_out_num('grid',$arg_name,$feature_out_features[$j]) if $third_arg_type eq 'waffles';
 					print_step_prop("$main::prog_dir/results/$main::name/stepprops/$out_filename",'fea',$feature_out_features[$j],$main::feautre_threshold);
+					compress_dir($arg_name,$arg_type) if $third_arg_type eq 'waffles';
 					compress_dir($arg_name,$arg_type) if !-e "$main::prog_dir/config/grid/$arg_name" . '.tgz';
 					copy("$main::prog_dir/config/$arg_type/$arg_name" . '.tgz' , "$main::prog_dir/results/$main::name/scripts/$out_filename");				
 					write_status($out_filename,'1');
@@ -2136,12 +2140,21 @@ sub get_job_num{
 	#Analyze the input of users and estimate the number of tasks.
 	my ($hash_tasks_l) = @_;
 	my $job_num = 1;
+	$$hash_tasks_l{'clu_nr_num'} = 0;
+	$$hash_tasks_l{'clu_para_num'} = 0;
 	if (@main::cluster_arg){
 		for (@main::cluster_arg){
 			my $arg_num = $_;
 			my $grid_num = get_grid_num($arg_num,'cluster'); 
 			$$hash_tasks_l{'clu'.$arg_num.'_para_num'} = $grid_num;
-			$$hash_tasks_l{'clu_para_num'} += $grid_num;
+			
+			if(is_nr($arg_num,'cluster')){
+				$$hash_tasks_l{'clu_nr_num'} += $grid_num;
+			}
+			else{
+				$$hash_tasks_l{'clu_para_num'} += $grid_num;
+			}
+			
 		}
 		$$hash_tasks_l{'clu_arg_num'} = scalar @main::cluster_arg;
 		$$hash_tasks_l{'clu_out_num'} = scalar @main::cluster_out_instances;
@@ -2152,12 +2165,20 @@ sub get_job_num{
 		}
 		
 	}
+	
+	$$hash_tasks_l{'fea_para_num'} = 0;
+	$$hash_tasks_l{'fea_nr_num'} = 0;
 	if (@main::feature_select_arg){
 		for (@main::feature_select_arg){
 			my $arg_num = $_;
 			my $grid_num = get_grid_num($arg_num,'feature'); 
 			$$hash_tasks_l{'fea'.$arg_num.'_para_num'} = $grid_num;
-			$$hash_tasks_l{'fea_para_num'} += $grid_num;
+			if (is_nr($arg_num,'feature')){
+				$$hash_tasks_l{'fea_nr_num'} += $grid_num;
+			}
+			else{
+				$$hash_tasks_l{'fea_para_num'} += $grid_num;
+			}
 		}
 		$$hash_tasks_l{'fea_arg_num'} = scalar @main::feature_select_arg;
 		$$hash_tasks_l{'fea_out_num'} = scalar @main::feature_out_features;
@@ -2186,13 +2207,16 @@ sub get_job_num{
 	while(@step){
 		my $last_step = pop @step;
 		if ($last_step eq 'clu'){
-			$job_num *= $$hash_tasks_l{'clu_para_num'} * $$hash_tasks_l{'clu_out_num'} + $$hash_tasks_l{'clu_out_all'};
+			$job_num *= $$hash_tasks_l{'clu_para_num'} * $$hash_tasks_l{'clu_out_num'} 
+			+ $$hash_tasks_l{'clu_nr_num'} + $$hash_tasks_l{'clu_out_all'};
 		}
 		elsif($last_step eq 'fea'){
-			$job_num *= $$hash_tasks_l{'fea_para_num'} * $$hash_tasks_l{'fea_out_num'} + $$hash_tasks_l{'fea_out_all'};
+			$job_num *= $$hash_tasks_l{'fea_para_num'} * $$hash_tasks_l{'fea_out_num'} 
+			+ $$hash_tasks_l{'fea_nr_num'} + $$hash_tasks_l{'fea_out_all'};
 		}
 		elsif($last_step eq 'tt'){
-			$job_num *= $$hash_tasks_l{'tt_para_num'} * ($$hash_tasks_l{'tt_out_num'} * ($$hash_tasks_l{'tt_in_num'} + 1) + $independent_count);
+			$job_num *= $$hash_tasks_l{'tt_para_num'} 
+			* ($$hash_tasks_l{'tt_out_num'} * ($$hash_tasks_l{'tt_in_num'} + 1) + $independent_count);
 		}
 		$job_num++ if @step;
 	}
@@ -2312,6 +2336,68 @@ sub get_grid_num{
 
 #*******************************************************************
 #
+# Function Name: is_nr($method_num, $method_type)
+#
+# Description: 
+#		Judge if this task is no ranking.
+#		This function could help PML estimate the total numbel of tasks
+#
+# Parameters:
+#
+# 		$method_num: The number of utilized method
+#		$method_type: clu, fea or tt
+#
+# Return:
+#
+#		1 if no ranking, 0 otherwise
+#
+#*********************************************************************
+
+sub is_nr{
+	#Judge if this task is no ranking.
+	my ($arg_num,$arg_type) = @_;
+	my $isweka = 0;
+	my $sys_line = '';
+	my $is_nr = 0;
+	open(FID_ARG,"$main::prog_dir/config/$arg_type");
+	while ( my $line = <FID_ARG>){
+		if ($^O !~ m/win/){$line =~ s/\r\n$/\n/;}
+		if ($line =~ m/^(\d+)\.(\w+)\s+([^\n]+)/){
+			if ($1 == $arg_num){
+				if ($2 eq 'weka'){
+					$isweka++;
+				}
+				$sys_line = $3;
+			}
+		}
+	}
+	close FID_ARG;
+	
+	if ($isweka){
+		if ($sys_line !~ /Ranker/ && $arg_type ne 'cluster'){
+			$is_nr = 1;
+		} 
+	}
+	else{
+		my $arg_sub_folder;
+		$arg_sub_folder = 'clu' if $arg_type eq 'cluster';
+		$arg_sub_folder = 'fea' if $arg_type eq 'feature';
+		$arg_sub_folder = 'tt' if $arg_type eq 'traintest';
+		$sys_line =~ s/\s+$//;
+		if (-f "$main::prog_dir/config/$arg_sub_folder/algprop/$sys_line"){
+			open FID_subarg,"$main::prog_dir/config/$arg_sub_folder/algprop/$sys_line";
+			map{
+				$is_nr = 1 if $_ =~ /no\s+rank/i || $_ =~ /no\s+ranker/i;
+			}<FID_subarg>;
+			close FID_subarg;
+		}
+	}
+	
+	return $is_nr;
+}
+
+#*******************************************************************
+#
 # Function Name: show_detail($instance , $attribute , $is4class , $total_job_num)
 #
 # Description: 
@@ -2332,17 +2418,17 @@ sub get_grid_num{
 
 sub show_detail{
 	my ($instance,$attribute,$is4class,$total_job_num) = @_;
-	print "Data infomation:\n";
+	print "Data information:\n";
 	print "Instances: $instance\n";
 	print "Attributes: $attribute\n";
-	print "Data type: for classify\n" if $is4class;
-	print "Data type: for regress\n" if !$is4class;
+	print "Data type: for classification\n" if $is4class;
+	print "Data type: for regression\n" if !$is4class;
 	
-	print "Task infomation:\n";
-	print "Totaly $total_job_num";
+	print "Task information:\n";
+	print "Totally $total_job_num";
 	print " task is " if $total_job_num == 1;
 	print " tasks are " if $total_job_num != 1;
-	print "expected to be generated and excuted.\n";
+	print "expected to be generated and executed.\n";
 }
 
 #*******************************************************************

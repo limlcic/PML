@@ -1,0 +1,7 @@
+#This example shows that using two methods to regress the data.
+NAME=multi_method_regress
+FILE=./pml/examples/data/cpu.arff
+STEP=tt
+TT_ARG=4,5
+INNER_FOLDS=5
+OUTER_FOLDS=5

@@ -110,7 +110,10 @@ our @boinc_option;
 our $boinc_options = '';
 our $round_l = 4;#the level of round, 4 means keep 4 decimal places (4.563758 => 4.5638)
 
-
+#timer
+our $time_switch;
+our $glo_time = time;
+our @glo_times;
 
 my $line;
 while(  $line = <FID_c>){
@@ -203,6 +206,7 @@ while(  $line = <FID_c>){
 	elsif($line =~ m/^TASK_COMPRESS_NUM\s*=\s*([^\n]+)/i){$task_tar_num = $1;}
 	elsif($line =~ m/^TASK_DEVIDE_NUM\s*=\s*([^\n]+)/i){$task_devide_num = $1;}
 	elsif($line =~ m/^ONE_OUT_PER_OPT\s*=\s*([^\n]+)/i){$one_out_per_opt = $1;}
+	elsif($line =~ m/^RUN_TIME\s*=\s*([^\n]+)/i){$time_switch = $1;}
 }
 close FID_c;
 
@@ -238,8 +242,9 @@ die 'PML can\'t locate the independent test data file' if $independent_data && !
 #init_pml_job();
 init_pml_result();
 
-
+push @glo_times,(time - $glo_time);
 reset_server() if $ARGV[1] && $ARGV[1] eq '--reset';
+$glo_time = time;
 
 #get core number
 my $core_muti = 1;
@@ -657,3 +662,11 @@ while ($#statue_files > 1){
 analysis_out_files();
 #Clean the .tgz files in the download folder
 server_clean();
+
+if ($time_switch){
+	#Run time (beta)
+	push @glo_times,(time - $glo_time);
+	$glo_time = 0;
+	map{$glo_time += $_}@glo_times;
+	print "\nCost time $glo_time seconds\n";
+}
