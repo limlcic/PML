@@ -1,0 +1,15 @@
+#This script is prvided for testing the efficiecy of PML by using the dataset 'data50487.arff'
+
+NAME=test50487
+FILE=./data50487.arff
+STEP=tt
+TT_ARG=1,2
+TT_ARG_OPT=1 -K _ON_;_OFF_,2 -R 1.0E****-6;-8
+INNER_FOLDS=5
+OUTER_FOLDS=5
+
+#The utilization of threads could be modified by changing CORE_NUM
+CORE_NUM=4
+
+SLEEP_TIME=1
+RUN_TIME=1
