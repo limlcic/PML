@@ -687,7 +687,7 @@ sub sfile_analysis{
 # Parameters:
 #
 # 		$task_name: The name of the finished task.
-#		@steps: The sequence of the process. Like: (¡®clu¡¯ , ¡®fea¡¯ , ¡®tt¡¯)
+#		@steps: The sequence of the process. Like: (ï¿½ï¿½cluï¿½ï¿½ , ï¿½ï¿½feaï¿½ï¿½ , ï¿½ï¿½ttï¿½ï¿½)
 #
 # Return:
 #
@@ -732,7 +732,7 @@ sub file_process_out{
 	if ($step ne 'tt'){
 		if (isarff("$results_path/$script_name")){
 			my $retry_count = 0;
-			while (-f "$pml_data_path/$script_name" . '.arff' || -s "$results_path/$script_name" != -s "$pml_data_path/$script_name" . '.arff'){
+			while (!-f "$pml_data_path/$script_name" . '.arff' || -s "$results_path/$script_name" != -s "$pml_data_path/$script_name" . '.arff'){
 				copy("$results_path/$script_name" ,  "$pml_data_path/$script_name" . '.arff');
 				die 'retry times exceed 1000 times' if ++$retry_count > 1000;
 				sleep 1 if $retry_count > 1; 
@@ -1966,7 +1966,7 @@ sub get_train_list_for_inner{
 # Return:
 #
 #		An ARRAY with two hash tables:
-#		my @out = get_train_test_list( ¡­ );
+#		my @out = get_train_test_list( ï¿½ï¿½ );
 #		my %train_list = @{$out[0]};
 #		my %test_list = @{$out[1]};
 #
